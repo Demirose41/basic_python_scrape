@@ -11,17 +11,16 @@ articles = soup.find_all("article")
 
 with open("blog_data.csv", "w") as csv_file:
     csv_writer = writer(csv_file)
-    csv_writer.writerow(["title","Link","Date"])
+    csv_writer.writerow(["Title","Link","Date"])
+    for article in articles:
+        a_tag = article.find("a")
+        title = a_tag.get_text()
+        # print(article.find("a").attrs['href']) or more simply
+        #print(article.find("a")['href'])
+        url = a_tag['href']
+        date = article.find("time")["datetime"]
+        csv_writer.writerow([title,url,date])
 
-for article in articles:
-    a_tag = article.find("a")
-    title = a_tag.get_text()
-    # print(article.find("a").attrs['href']) or more simply
-    #print(article.find("a")['href'])
-    url = a_tag['href']
-    date = article.find("time")["datetime"]
-    print(title, url, date)
+        # date
 
-    # date
-    
     
